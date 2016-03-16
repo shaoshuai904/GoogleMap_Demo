@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 标题栏/底部功能栏 -背景色 -->
+    <color name="function_bar_bg">#37b2cb</color>
+    <!-- 顶部功能条目 -->
+    <color name="top_button_bg_default">#00ff00ff</color>
+    <color name="top_button_bg_pressed">#90ffffff</color>
+    <!-- 其他 -->
+    <color name="split_line">#DDDDDD</color>
+    <!-- LV分割线 -->
+    <color name="split_bg">#EBEBEB</color>
+
+    <!-- 其他 -->
+    <color name="titlebar_bg">#222222</color>
+    <color name="select_default">#969fa5</color>
+    <color name="select_right">#48daa9</color>
+    <color name="select_error">#eb6161</color>
+    <color name="select_select">#c6c6c6</color>
+    <color name="select_answered">#60adde</color>
+    <color name="right_answer">#009100</color>
+
+</resources>

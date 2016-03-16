@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- 返回和保存字体的大小 -->
+    <dimen name="comm_titlebar_backAndSaveTextSize">18sp</dimen>
+    <!-- 所有标题栏中间的字体的大小 -->
+    <dimen name="comm_titlebar_centerTextSize">20sp</dimen>
+
+</resources>

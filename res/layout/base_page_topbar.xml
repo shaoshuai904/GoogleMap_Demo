@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/function_bar_bg" >
+
+    <!-- 通用——页面顶部条 -->
+
+    <TextView
+        android:id="@+id/tv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/selector_top_button_bg"
+        android:drawableLeft="@drawable/ic_titlebar_back"
+        android:gravity="center_vertical"
+        android:onClick="onBack"
+        android:padding="1dp"
+        android:text="返回"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/comm_titlebar_backAndSaveTextSize" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:shadowColor="@android:color/black"
+        android:shadowDx="3.0"
+        android:shadowDy="3.0"
+        android:shadowRadius="5.0"
+        android:singleLine="true"
+        android:text="标题"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+</RelativeLayout>

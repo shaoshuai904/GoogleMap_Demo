@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 直角不带边变色矩形 -->
+
+
+    <!-- 默认状态 -->
+    <item android:state_pressed="false"><shape android:shape="rectangle">
+
+            <!-- 填充颜色 -->
+            <solid android:color="#FFFFFF" />
+        </shape></item>
+
+    <!-- 选择状态 -->
+    <item android:state_pressed="true"><shape android:shape="rectangle">
+
+            <!-- 填充颜色 -->
+            <solid android:color="#99DDDDDD" />
+        </shape></item>
+
+</selector>
