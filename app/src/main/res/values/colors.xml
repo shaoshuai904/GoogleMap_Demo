@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--主背景-->
+    <color name="main_bg_color">#EFEFF4</color>
+    <!--顶部条-->
+    <color name="top_bar_bg_color">#3F51B5</color>
+    <color name="top_bar_title_color">#FFFFFF</color>
+    <color name="top_bar_side_enabled_color">#FFFFFF</color>
+    <color name="top_bar_side_disabled_color">#689FB9</color>
+
+
 </resources>
