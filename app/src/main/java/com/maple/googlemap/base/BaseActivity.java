@@ -74,6 +74,15 @@ public class BaseActivity extends FragmentActivity {
         ft.addToBackStack(null);
         ft.commit();
     }
+
+    public void onBack() {
+//        if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+//            getSupportFragmentManager().popBackStack();
+//        } else {
+//            finish();
+//        }
+        onBackPressed();
+    }
     // ----------- left right button ------------------
 
     public void setTitle(String str) {

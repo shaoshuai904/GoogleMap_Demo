@@ -1,6 +1,7 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="top_bar_height">48dp</dimen>
+    <dimen name="bt_radian">8dp</dimen><!-- 圆角弧度 -->
 
 
 </resources>
