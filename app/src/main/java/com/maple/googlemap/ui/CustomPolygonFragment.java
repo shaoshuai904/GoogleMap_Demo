@@ -16,6 +16,8 @@ import com.maple.googlemap.base.BaseFragment;
 import butterknife.ButterKnife;
 
 /**
+ * 自定义Polygon
+ *
  * @author maple
  * @time 2018/8/8.
  */

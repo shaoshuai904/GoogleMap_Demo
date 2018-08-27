@@ -8,12 +8,15 @@ import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.maple.googlemap.R;
 import com.maple.googlemap.base.BaseFragment;
 import com.maple.googlemap.utils.permission.PermissionFragment;
@@ -35,7 +38,7 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
 
     @Override
     public View initView(LayoutInflater inflater) {
-        view = inflater.inflate(R.layout.fragment_maps, null);
+        view = inflater.inflate(R.layout.fragment_base_map, null);
         ButterKnife.bind(this, view);
         mActivity = (MainActivity) getActivity();
 
@@ -51,6 +54,23 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
 
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fm_map);
         mapFragment.getMapAsync(this);
+
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+//        mFusedLocationClient.requestLocationUpdates(new LocationRequest(),
+//                new LocationCallback() {
+//                    @Override
+//                    public void onLocationResult(LocationResult locationResult) {
+//                        if (locationResult != null) {
+//                            for (Location location : locationResult.getLocations()) {
+//                                // Update UI with location data
+//                                Log.e("result", "  " + location.toString());
+//                                // ...
+//                            }
+//                        }
+//                    }
+//                },
+//                null /* Looper */);
+
     }
 
     @Override
@@ -68,16 +88,52 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
                 && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             checkPermission();
         } else {
-            mMap.setMyLocationEnabled(true);
-            Location location = mMap.getMyLocation();
-            if (location != null) {
-                sydney = new LatLng(location.getLatitude(), location.getLongitude());
-            }
+            if (!mMap.isMyLocationEnabled())
+                mMap.setMyLocationEnabled(true);
+
+//            LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+//            Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//
+//            if (myLocation == null) {
+//                Criteria criteria = new Criteria();
+//                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+//                String provider = lm.getBestProvider(criteria, true);
+//                myLocation = lm.getLastKnownLocation(provider);
+//            }
+//
+//            if (myLocation != null) {
+//                LatLng userLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14), 1500, null);
+//            }
+            // 最新方法
+            LocationServices.getFusedLocationProviderClient(mActivity)
+                    .getLastLocation()
+                    .addOnSuccessListener(mActivity, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                moveToLatLng(location);
+                            }
+                        }
+                    });
         }
+        // 过时
+//        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+//            @Override
+//            public void onMyLocationChange(Location location) {
+//                moveToLatLng(location);
+//            }
+//        });
 
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
+    private void moveToLatLng(Location location) {
+        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14), 1500, null);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -108,4 +164,6 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
                         Manifest.permission.ACCESS_COARSE_LOCATION
                 });
     }
+
+
 }
