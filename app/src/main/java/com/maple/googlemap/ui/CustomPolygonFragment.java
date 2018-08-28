@@ -3,16 +3,17 @@ package com.maple.googlemap.ui;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.maple.googlemap.R;
 import com.maple.googlemap.base.BaseFragment;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -22,6 +23,8 @@ import butterknife.ButterKnife;
  * @time 2018/8/8.
  */
 public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
+    @BindView(R.id.tv_clear) TextView tv_clear;
+
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
     MainActivity mActivity;
@@ -29,7 +32,7 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
 
     @Override
     public View initView(LayoutInflater inflater) {
-        view = inflater.inflate(R.layout.fragment_maps, null);
+        view = inflater.inflate(R.layout.fragment_custom_polygon, null);
         ButterKnife.bind(this, view);
         mActivity = (MainActivity) getActivity();
 
@@ -49,16 +52,28 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
     @Override
     public void initListener() {
         mActivity.setLeftBtnClickListener(this);
+        tv_clear.setOnClickListener(this);
     }
+
+
+    PolygonOptions polygonOptions;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        polygonOptions = new PolygonOptions();
+
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                polygonOptions.add(latLng);
+
+                mMap.clear();
+
+                mMap.addPolygon(polygonOptions);
+            }
+        });
     }
 
     @Override
@@ -66,6 +81,9 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
         switch (v.getId()) {
             case R.id.tv_left_title:
                 mActivity.onBack();
+                break;
+            case R.id.tv_clear:
+                mMap.clear();
                 break;
             default:
                 break;
