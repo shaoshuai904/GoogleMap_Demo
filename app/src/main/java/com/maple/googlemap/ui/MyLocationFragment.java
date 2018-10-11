@@ -4,11 +4,12 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.maple.googlemap.R;
 import com.maple.googlemap.base.BaseFragment;
@@ -102,8 +104,7 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
 //            }
 //
 //            if (myLocation != null) {
-//                LatLng userLocation = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14), 1500, null);
+//                moveToLatLng(myLocation);
 //            }
             // 最新方法
             LocationServices.getFusedLocationProviderClient(mActivity)
@@ -114,6 +115,12 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
                             if (location != null) {
                                 moveToLatLng(location);
                             }
+                        }
+                    })
+                    .addOnFailureListener(mActivity, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(mActivity, "Fail:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
         }
