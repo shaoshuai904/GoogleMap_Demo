@@ -1,5 +1,6 @@
 package com.maple.googlemap.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.maple.googlemap.R;
 import com.maple.googlemap.base.BaseFragment;
@@ -55,23 +58,45 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
         tv_clear.setOnClickListener(this);
     }
 
-
-    PolygonOptions polygonOptions;
+    PolygonOptions options;
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        polygonOptions = new PolygonOptions();
-
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                polygonOptions.add(latLng);
-
+                if (options == null) {
+                    options = new PolygonOptions()
+                            .strokeColor(Color.RED)
+                            .strokeWidth(2.0f);
+                }
+                options.add(latLng);
                 mMap.clear();
+                mMap.addPolygon(options);
+                for (LatLng lng : options.getPoints()) {
+                    mMap.addMarker(new MarkerOptions()
+                            .draggable(true)
+                            .position(lng));
+                }
+            }
+        });
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
 
-                mMap.addPolygon(polygonOptions);
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+                marker.setPosition(marker.getPosition());
+//                marker.setPosition();
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+//                marker.setPosition();
             }
         });
     }
@@ -83,6 +108,7 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
                 mActivity.onBack();
                 break;
             case R.id.tv_clear:
+                options = null;
                 mMap.clear();
                 break;
             default:

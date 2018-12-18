@@ -14,11 +14,9 @@
         android:id="@+id/ll_refresh_map"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
         android:background="#ddd"
         android:orientation="horizontal"
         android:padding="10dp">
-
 
         <TextView
             android:layout_width="0dp"
