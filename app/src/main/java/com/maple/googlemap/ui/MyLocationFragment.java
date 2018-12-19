@@ -4,9 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,7 +21,10 @@ import com.maple.googlemap.base.BaseFragment;
 import com.maple.googlemap.utils.permission.PermissionFragment;
 import com.maple.googlemap.utils.permission.PermissionListener;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 获取我的位置
@@ -32,23 +32,21 @@ import butterknife.ButterKnife;
  * @author maple
  * @time 2018/8/8.
  */
-public class MyLocationFragment extends BaseFragment implements OnMapReadyCallback, View.OnClickListener {
+public class MyLocationFragment extends BaseFragment implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
     MainActivity mActivity;
 
-
     @Override
-    public View initView(LayoutInflater inflater) {
-        view = inflater.inflate(R.layout.fragment_base_map, null);
-        ButterKnife.bind(this, view);
-        mActivity = (MainActivity) getActivity();
-
-        return view;
+    public int getLayoutRes() {
+        return R.layout.fragment_base_map;
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        mActivity = (MainActivity) getActivity();
+        ButterKnife.bind(this, view);
+
         mActivity.setTitle("My Location");
         mActivity.setLeftBtnState("Back", View.VISIBLE, true);
         mActivity.setRightBtnState(View.GONE, false);
@@ -57,6 +55,7 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fm_map);
         mapFragment.getMapAsync(this);
 
+//        mActivity.setLeftBtnClickListener(this);
 //        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 //        mFusedLocationClient.requestLocationUpdates(new LocationRequest(),
 //                new LocationCallback() {
@@ -75,10 +74,6 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
 
     }
 
-    @Override
-    public void initListener() {
-        mActivity.setLeftBtnClickListener(this);
-    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -86,26 +81,12 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             checkPermission();
         } else {
             if (!mMap.isMyLocationEnabled())
                 mMap.setMyLocationEnabled(true);
-
-//            LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-//            Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//
-//            if (myLocation == null) {
-//                Criteria criteria = new Criteria();
-//                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-//                String provider = lm.getBestProvider(criteria, true);
-//                myLocation = lm.getLastKnownLocation(provider);
-//            }
-//
-//            if (myLocation != null) {
-//                moveToLatLng(myLocation);
-//            }
             // 最新方法
             LocationServices.getFusedLocationProviderClient(mActivity)
                     .getLastLocation()
@@ -123,8 +104,20 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
                             Toast.makeText(mActivity, "Fail:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+            // System Service
+//            LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+//            Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//            if (myLocation == null) {
+//                Criteria criteria = new Criteria();
+//                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+//                String provider = lm.getBestProvider(criteria, true);
+//                myLocation = lm.getLastKnownLocation(provider);
+//            }
+//            if (myLocation != null) {
+//                moveToLatLng(myLocation);
+//            }
         }
-        // 过时
+//        // 过时
 //        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
 //            @Override
 //            public void onMyLocationChange(Location location) {
@@ -141,17 +134,10 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14), 1500, null);
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_left_title:
-                mActivity.onBack();
-                break;
-            default:
-                break;
-        }
-    }
+//    @OnClick(R.id.tv_left_title)
+//    public void onBack() {
+//        mActivity.onBack();
+//    }
 
     private void checkPermission() {
         PermissionFragment.getPermissionFragment(getActivity())

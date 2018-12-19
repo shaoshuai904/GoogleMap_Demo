@@ -2,9 +2,9 @@ package com.maple.googlemap.ui;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,27 +34,22 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
 
 
     @Override
-    public View initView(LayoutInflater inflater) {
-        view = inflater.inflate(R.layout.fragment_custom_polygon, null);
-        ButterKnife.bind(this, view);
-        mActivity = (MainActivity) getActivity();
-
-        return view;
+    public int getLayoutRes() {
+        return R.layout.fragment_custom_polygon;
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
+        mActivity = (MainActivity) getActivity();
+
         mActivity.setTitle("Custom Polygon");
         mActivity.setLeftBtnState("Back", View.VISIBLE, true);
         mActivity.setRightBtnState(View.GONE, false);
 
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fm_map);
         mapFragment.getMapAsync(this);
-    }
 
-    @Override
-    public void initListener() {
-        mActivity.setLeftBtnClickListener(this);
         tv_clear.setOnClickListener(this);
     }
 
@@ -102,11 +97,20 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
     }
 
     @Override
+    public boolean onKeyBackPressed() {
+        // 具体操作
+        if (1 == 1) {
+            Toast.makeText(mContext, "back Fragment", Toast.LENGTH_SHORT).show();
+            mActivity.backFragment();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_left_title:
-                mActivity.onBack();
-                break;
             case R.id.tv_clear:
                 options = null;
                 mMap.clear();

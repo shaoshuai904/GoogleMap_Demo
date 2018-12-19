@@ -1,7 +1,6 @@
 package com.maple.googlemap.ui;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,17 +25,15 @@ public class HomeFragment extends BaseFragment {
     MainActivity mActivity;
 
     @Override
-    public View initView(LayoutInflater inflater) {
-        view = inflater.inflate(R.layout.fragment_home, null);
-        ButterKnife.bind(this, view);
-
-        mActivity = (MainActivity) getActivity();
-
-        return view;
+    public int getLayoutRes() {
+        return R.layout.fragment_home;
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
+        mActivity = (MainActivity) getActivity();
+
         mActivity.setTitle("Home");
         mActivity.setLeftBtnState(View.GONE, false);
         mActivity.setRightBtnState(View.GONE, false);
@@ -44,10 +41,6 @@ public class HomeFragment extends BaseFragment {
         tv_about.setText(AppUtils.getAppVersionString(getContext()));
     }
 
-    @Override
-    public void initListener() {
-
-    }
 
     @OnClick(R.id.bt_draw_polygon)
     public void onDrawPolygon() {

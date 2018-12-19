@@ -3,9 +3,6 @@ package com.maple.googlemap.base;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,6 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.maple.googlemap.R;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 
 /**
@@ -34,7 +35,7 @@ public class BaseActivity extends FragmentActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 保持竖屏
 
         setContentView(R.layout.activity_base_fragment);
-        mContext = getApplicationContext();
+        mContext = getBaseContext();
 
         findView();
     }
@@ -46,6 +47,19 @@ public class BaseActivity extends FragmentActivity {
         tv_right_title = (TextView) findViewById(R.id.tv_right_title);
         tv_title = (TextView) findViewById(R.id.tv_title);
         ll_root = (LinearLayout) findViewById(R.id.ll_root);
+
+        tv_left_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        tv_right_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRightClick();
+            }
+        });
     }
 
     public void setBaseContentView(int layoutID) {
@@ -75,26 +89,30 @@ public class BaseActivity extends FragmentActivity {
         ft.commit();
     }
 
-    public void onBack() {
-//        if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
-//            getSupportFragmentManager().popBackStack();
-//        } else {
-//            finish();
-//        }
-        onBackPressed();
+    public void backFragment() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            finish();
+        }
     }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_content);
+        if (fragment instanceof BaseFragment) {
+            if (!((BaseFragment) fragment).onKeyBackPressed()) {
+                backFragment();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     // ----------- left right button ------------------
 
     public void setTitle(String str) {
         tv_title.setText(str);
-    }
-
-    public void setLeftBtnClickListener(View.OnClickListener listener) {
-        tv_left_title.setOnClickListener(listener);
-    }
-
-    public void setRightBtnClickListener(View.OnClickListener listener) {
-        tv_right_title.setOnClickListener(listener);
     }
 
     public void setLeftBtnState(String str, int visibility, boolean isEnabled) {
@@ -115,5 +133,9 @@ public class BaseActivity extends FragmentActivity {
     public void setRightBtnState(int visibility, boolean isEnabled) {
         tv_right_title.setVisibility(visibility);
         tv_right_title.setEnabled(isEnabled);
+    }
+
+    public void onRightClick() {
+
     }
 }
