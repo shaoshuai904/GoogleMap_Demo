@@ -35,7 +35,7 @@ public class BaseActivity extends FragmentActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 保持竖屏
 
         setContentView(R.layout.activity_base_fragment);
-        mContext = getBaseContext();
+        mContext = this;
 
         findView();
     }

@@ -8,23 +8,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 
 /**
  * @author maple
- * @time 2016/4/13
+ * @time 2018/12/17
  */
 public abstract class BaseFragment extends Fragment {
     public View view;
     public Context mContext;
-    public FragmentManager fm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext = getActivity();
-        this.fm = getFragmentManager();
     }
 
     @Override

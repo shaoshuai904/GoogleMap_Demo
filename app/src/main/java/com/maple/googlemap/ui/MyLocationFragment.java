@@ -1,6 +1,7 @@
 package com.maple.googlemap.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -18,13 +19,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.maple.googlemap.R;
 import com.maple.googlemap.base.BaseFragment;
-import com.maple.googlemap.utils.permission.PermissionFragment;
-import com.maple.googlemap.utils.permission.PermissionListener;
+import com.maple.googlemap.utils.permission.RxPermissions;
+
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 获取我的位置
@@ -87,46 +90,52 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
         } else {
             if (!mMap.isMyLocationEnabled())
                 mMap.setMyLocationEnabled(true);
-            // 最新方法
-            LocationServices.getFusedLocationProviderClient(mActivity)
-                    .getLastLocation()
-                    .addOnSuccessListener(mActivity, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                moveToLatLng(location);
-                            }
-                        }
-                    })
-                    .addOnFailureListener(mActivity, new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(mActivity, "Fail:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            // System Service
-//            LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-//            Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//            if (myLocation == null) {
-//                Criteria criteria = new Criteria();
-//                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-//                String provider = lm.getBestProvider(criteria, true);
-//                myLocation = lm.getLastKnownLocation(provider);
-//            }
-//            if (myLocation != null) {
-//                moveToLatLng(myLocation);
-//            }
+            getMyLocation();
         }
-//        // 过时
+
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getMyLocation() {
+        // 最新方法
+        LocationServices.getFusedLocationProviderClient(mActivity)
+                .getLastLocation()
+                .addOnSuccessListener(mActivity, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null) {
+                            moveToLatLng(location);
+                        }
+                    }
+                })
+                .addOnFailureListener(mActivity, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(mActivity, "Fail:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // System Service
+//        LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+//        Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//        if (myLocation == null) {
+//            Criteria criteria = new Criteria();
+//            criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+//            String provider = lm.getBestProvider(criteria, true);
+//            myLocation = lm.getLastKnownLocation(provider);
+//        }
+//        if (myLocation != null) {
+//            moveToLatLng(myLocation);
+//        }
+        // 过时
 //        mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
 //            @Override
 //            public void onMyLocationChange(Location location) {
 //                moveToLatLng(location);
 //            }
 //        });
-
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
     private void moveToLatLng(Location location) {
@@ -134,27 +143,32 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14), 1500, null);
     }
 
-//    @OnClick(R.id.tv_left_title)
-//    public void onBack() {
-//        mActivity.onBack();
-//    }
-
     private void checkPermission() {
-        PermissionFragment.getPermissionFragment(getActivity())
-                .setPermissionListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-
-                    }
-
-                    @Override
-                    public void onPermissionDenied(String[] deniedPermissions) {
-
-                    }
-                })
-                .checkPermissions(new String[]{
+        new RxPermissions(mActivity)
+                .request(
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
                 });
     }
 
