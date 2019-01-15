@@ -15,15 +15,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.maple.googlemap.R;
 import com.maple.googlemap.base.BaseFragment;
 import com.maple.googlemap.utils.permission.RxPermissions;
 
-import java.util.Objects;
-
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import butterknife.ButterKnife;
 import io.reactivex.Observer;
@@ -102,19 +97,14 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
         // 最新方法
         LocationServices.getFusedLocationProviderClient(mActivity)
                 .getLastLocation()
-                .addOnSuccessListener(mActivity, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            moveToLatLng(location);
-                        }
+                .addOnSuccessListener(mActivity, location -> {
+                    if (location != null) {
+                        moveToLatLng(location);
                     }
                 })
-                .addOnFailureListener(mActivity, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(mActivity, "Fail:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(mActivity, e -> {
+                    // fail
+                    Toast.makeText(mActivity, "Fail:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
 
         // System Service

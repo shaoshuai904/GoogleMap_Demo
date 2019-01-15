@@ -45,19 +45,14 @@ public class MainActivity extends BaseActivity {
         }
         LocationServices.getFusedLocationProviderClient(mContext)
                 .getLastLocation()
-                .addOnSuccessListener((Activity) mContext, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            Toast.makeText(mContext, "success: " + location.getLatitude() + " - " + location.getLongitude(), Toast.LENGTH_SHORT).show();
-                        }
+                .addOnSuccessListener((Activity) mContext, location -> {
+                    if (location != null) {
+                        Toast.makeText(mContext, "success: " + location.getLatitude() + " - " + location.getLongitude(), Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addOnFailureListener((Activity) mContext, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(mContext, "Fail:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener((Activity) mContext, e -> {
+                    // fail
+                    Toast.makeText(mContext, "Fail:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 

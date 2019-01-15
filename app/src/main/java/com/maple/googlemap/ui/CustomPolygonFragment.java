@@ -59,22 +59,19 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                if (options == null) {
-                    options = new PolygonOptions()
-                            .strokeColor(Color.RED)
-                            .strokeWidth(2.0f);
-                }
-                options.add(latLng);
-                mMap.clear();
-                mMap.addPolygon(options);
-                for (LatLng lng : options.getPoints()) {
-                    mMap.addMarker(new MarkerOptions()
-                            .draggable(true)
-                            .position(lng));
-                }
+        mMap.setOnMapClickListener(latLng -> {
+            if (options == null) {
+                options = new PolygonOptions()
+                        .strokeColor(Color.RED)
+                        .strokeWidth(2.0f);
+            }
+            options.add(latLng);
+            mMap.clear();
+            mMap.addPolygon(options);
+            for (LatLng lng : options.getPoints()) {
+                mMap.addMarker(new MarkerOptions()
+                        .draggable(true)
+                        .position(lng));
             }
         });
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
