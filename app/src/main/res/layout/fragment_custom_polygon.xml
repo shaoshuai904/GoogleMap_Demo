@@ -19,26 +19,36 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/tv_add"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Refresh Map"
-            android:textColor="#2595cc"
+            android:text="Add"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/tv_clear"
+            android:id="@+id/tv_delete"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Clear"
-            android:textColor="#2595cc"
+            android:text="Delete"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_clear_all"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Clear all"
             android:textSize="16sp" />
 
     </LinearLayout>

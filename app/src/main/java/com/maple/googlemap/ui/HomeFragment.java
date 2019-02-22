@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.maple.googlemap.R;
 import com.maple.googlemap.base.BaseFragment;
+import com.maple.googlemap.ui.fragment.CustomPolygonFragment;
+import com.maple.googlemap.ui.fragment.MyLocationFragment;
 import com.maple.googlemap.utils.AppUtils;
 
 import butterknife.BindView;
@@ -18,8 +20,6 @@ import butterknife.OnClick;
  * @time 2018/8/8.
  */
 public class HomeFragment extends BaseFragment {
-    @BindView(R.id.bt_draw_polygon) Button bt_draw_polygon;
-    @BindView(R.id.bt_my_location) Button bt_my_location;
     @BindView(R.id.tv_about) TextView tv_about;
 
     MainActivity mActivity;
@@ -42,7 +42,7 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.bt_draw_polygon)
+    @OnClick(R.id.bt_draw_polygons)
     public void onDrawPolygon() {
         mActivity.replaceView(new CustomPolygonFragment());
     }

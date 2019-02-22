@@ -9,13 +9,13 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/bt_draw_polygon"
+            android:id="@+id/bt_draw_polygons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/selector_base_fillet_border_bg"
             android:padding="10dp"
-            android:text="Draw Polygon"
+            android:text="Draw Polygons"
             android:textAllCaps="false" />
 
 

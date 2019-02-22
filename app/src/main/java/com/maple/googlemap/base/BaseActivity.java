@@ -111,8 +111,8 @@ public class BaseActivity extends FragmentActivity {
 
     // ----------- left right button ------------------
 
-    public void setTitle(String str) {
-        tv_title.setText(str);
+    public void setTitle(CharSequence title) {
+        tv_title.setText(title);
     }
 
     public void setLeftBtnState(String str, int visibility, boolean isEnabled) {

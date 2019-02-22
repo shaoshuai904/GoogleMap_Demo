@@ -1,4 +1,4 @@
-package com.maple.googlemap.ui;
+package com.maple.googlemap.ui.fragment;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.maple.googlemap.R;
 import com.maple.googlemap.base.BaseFragment;
+import com.maple.googlemap.ui.MainActivity;
 import com.maple.googlemap.utils.permission.RxPermissions;
 
 import androidx.core.app.ActivityCompat;
