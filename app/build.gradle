@@ -6,19 +6,19 @@ android {
         applicationId "com.maple.googlemap"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 3
+        versionCode 4
         versionName "1.0.1"
     }
 
     signingConfigs {
         debug {
-            storeFile file("../../maple.keystore")
+            storeFile file("../maple.keystore")
             storePassword "shaoshuai"
             keyAlias "shaoshuai"
             keyPassword "shaoshuai"
         }
         release {
-            storeFile file("../../maple.keystore")
+            storeFile file("../maple.keystore")
             storePassword "shaoshuai"
             keyAlias "shaoshuai"
             keyPassword "shaoshuai"
@@ -42,7 +42,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.3'
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     //
     implementation 'com.jakewharton:butterknife:10.0.0'

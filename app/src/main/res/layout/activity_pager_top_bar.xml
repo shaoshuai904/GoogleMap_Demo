@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:background="@drawable/selector_title_click_bg"
-        android:drawableStart="@drawable/ic_back"
+        android:drawableLeft="@drawable/ic_back"
         android:drawablePadding="1dp"
         android:gravity="center"
         android:padding="10dp"
@@ -25,7 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="标题"
+        android:maxWidth="220dp"
+        android:singleLine="true"
+        android:text="LongTitleTestLongTitleTestLongTitleTest"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 

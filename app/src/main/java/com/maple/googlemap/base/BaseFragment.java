@@ -19,9 +19,9 @@ public abstract class BaseFragment extends Fragment {
     public Context mContext;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.mContext = getActivity();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mContext = context;
     }
 
     @Override
