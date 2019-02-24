@@ -144,5 +144,21 @@ public class CustomAreaBean {
         this.markers = markers;
     }
 
+    @Override
+    public String toString() {
+        return "CustomAreaBean{" +
+                "name = '" + name + '\'' +
+                ", polygon point size = " + polygon.getPoints().size() +
+                ", markers = " + getPointInfo() +
+                '}';
+    }
 
+    public String getPointInfo() {
+        StringBuilder sb = new StringBuilder();
+        for (Marker marker : markers) {
+            LatLng latLng = marker.getPosition();
+            sb.append("new LatLng(" + latLng.latitude + "," + latLng.longitude + "),");
+        }
+        return sb.toString();
+    }
 }

@@ -9,6 +9,16 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/bt_my_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/selector_base_fillet_border_bg"
+            android:padding="10dp"
+            android:text="My Location"
+            android:textAllCaps="false" />
+
+        <Button
             android:id="@+id/bt_draw_polygons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,15 +28,24 @@
             android:text="Draw Polygons"
             android:textAllCaps="false" />
 
-
         <Button
-            android:id="@+id/bt_my_location"
+            android:id="@+id/bt_polygon_barycenter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/selector_base_fillet_border_bg"
             android:padding="10dp"
-            android:text="My Location"
+            android:text="计算不规则多边形-重心"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/bt_find_point_in_polygon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/selector_base_fillet_border_bg"
+            android:padding="10dp"
+            android:text="判断一个点是否在不规则多边形内部"
             android:textAllCaps="false" />
 
         <TextView
