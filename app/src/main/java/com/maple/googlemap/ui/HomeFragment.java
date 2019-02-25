@@ -9,7 +9,7 @@ import com.maple.googlemap.base.BaseFragment;
 import com.maple.googlemap.ui.fragment.CustomPolygonFragment;
 import com.maple.googlemap.ui.fragment.FindPointInPolygonFragment;
 import com.maple.googlemap.ui.fragment.MyLocationFragment;
-import com.maple.googlemap.ui.fragment.PolygonBarycenterFragment;
+import com.maple.googlemap.ui.fragment.PolygonCenterFragment;
 import com.maple.googlemap.utils.AppUtils;
 
 import butterknife.BindView;
@@ -54,7 +54,7 @@ public class HomeFragment extends BaseFragment {
 
     @OnClick(R.id.bt_polygon_barycenter)
     public void onPolygonBarycenter() {
-        mActivity.replaceView(new PolygonBarycenterFragment());
+        mActivity.replaceView(new PolygonCenterFragment());
     }
 
     @OnClick(R.id.bt_find_point_in_polygon)
