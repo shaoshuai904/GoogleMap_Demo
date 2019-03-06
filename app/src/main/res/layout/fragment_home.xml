@@ -48,6 +48,16 @@
             android:text="判断一个点是否在不规则多边形内部"
             android:textAllCaps="false" />
 
+        <Button
+            android:id="@+id/bt_sliding_up_panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/selector_base_fillet_border_bg"
+            android:padding="10dp"
+            android:text="多级悬浮滑动面板"
+            android:textAllCaps="false" />
+
         <TextView
             android:id="@+id/tv_about"
             android:layout_width="match_parent"

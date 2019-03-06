@@ -10,6 +10,7 @@ import com.maple.googlemap.ui.fragment.CustomPolygonFragment;
 import com.maple.googlemap.ui.fragment.FindPointInPolygonFragment;
 import com.maple.googlemap.ui.fragment.MyLocationFragment;
 import com.maple.googlemap.ui.fragment.PolygonCenterFragment;
+import com.maple.googlemap.ui.fragment.SlidingUpPanelFragment;
 import com.maple.googlemap.utils.AppUtils;
 
 import butterknife.BindView;
@@ -61,5 +62,11 @@ public class HomeFragment extends BaseFragment {
     public void onFindPointInPolygon() {
         mActivity.replaceView(new FindPointInPolygonFragment());
     }
+
+    @OnClick(R.id.bt_sliding_up_panel)
+    public void onSlidingUpPanel() {
+        mActivity.replaceView(new SlidingUpPanelFragment());
+    }
+
 
 }
