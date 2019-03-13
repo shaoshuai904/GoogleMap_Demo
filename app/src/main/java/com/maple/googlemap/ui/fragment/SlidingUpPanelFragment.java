@@ -203,11 +203,7 @@ public class SlidingUpPanelFragment extends BaseFragment implements OnMapReadyCa
         for (int i = 0; i < 30; i++) {
             arrayList.add("item " + i);
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                mContext,
-                android.R.layout.simple_list_item_1,
-                arrayList);
-        lv_list.setAdapter(arrayAdapter);
+        lv_list.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, arrayList));
         lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -2,23 +2,23 @@
 <resources>
 
     <declare-styleable name="SlidingUpPanelLayout">
-        <attr name="umanoPanelHeight" format="dimension" />
-        <attr name="umanoShadowHeight" format="dimension" />
-        <attr name="umanoParallaxOffset" format="dimension" />
-        <attr name="umanoFadeColor" format="color" />
-        <attr name="umanoFlingVelocity" format="integer" />
-        <attr name="umanoDragView" format="reference" />
-        <attr name="umanoScrollableView" format="reference" />
-        <attr name="umanoOverlay" format="boolean" />
-        <attr name="umanoClipPanel" format="boolean" />
-        <attr name="umanoAnchorPoint" format="float" />
-        <attr name="umanoInitialState" format="enum">
+        <attr name="ms_panel_height" format="dimension" />
+        <attr name="ms_shadow_height" format="dimension" />
+        <attr name="ms_parallax_offset" format="dimension" />
+        <attr name="ms_fade_color" format="color" />
+        <attr name="ms_fling_velocity" format="integer" />
+        <attr name="ms_drag_view" format="reference" />
+        <attr name="ms_scrollable_view" format="reference" />
+        <attr name="ms_overlay" format="boolean" />
+        <attr name="ms_clip_panel" format="boolean" />
+        <attr name="ms_anchor_point" format="float" />
+        <attr name="ms_initial_state" format="enum">
             <enum name="expanded" value="0" />
             <enum name="collapsed" value="1" />
             <enum name="anchored" value="2" />
             <enum name="hidden" value="3" />
         </attr>
-        <attr name="umanoScrollInterpolator" format="reference" />
+        <attr name="ms_scroll_interpolator" format="reference" />
     </declare-styleable>
 
 </resources>

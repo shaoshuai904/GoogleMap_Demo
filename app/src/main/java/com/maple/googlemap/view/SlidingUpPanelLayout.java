@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.maple.googlemap.R;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import androidx.core.view.MotionEventCompat;
 import androidx.core.view.ViewCompat;
 
 
@@ -175,7 +173,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
      * Current state of the slideable view.
      */
     public enum PanelState {
-        EXPANDED,// 展开
+        EXPANDED,// 完全展开
         COLLAPSED,// 收缩
         ANCHORED,// 抛锚固定
         HIDDEN,// 隐藏
@@ -302,24 +300,24 @@ public class SlidingUpPanelLayout extends ViewGroup {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SlidingUpPanelLayout);
 
             if (ta != null) {
-                mPanelHeight = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_umanoPanelHeight, -1);
-                mShadowHeight = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_umanoShadowHeight, -1);
-                mParallaxOffset = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_umanoParallaxOffset, -1);
+                mPanelHeight = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_ms_panel_height, -1);
+                mShadowHeight = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_ms_shadow_height, -1);
+                mParallaxOffset = ta.getDimensionPixelSize(R.styleable.SlidingUpPanelLayout_ms_parallax_offset, -1);
 
-                mMinFlingVelocity = ta.getInt(R.styleable.SlidingUpPanelLayout_umanoFlingVelocity, DEFAULT_MIN_FLING_VELOCITY);
-                mCoveredFadeColor = ta.getColor(R.styleable.SlidingUpPanelLayout_umanoFadeColor, DEFAULT_FADE_COLOR);
+                mMinFlingVelocity = ta.getInt(R.styleable.SlidingUpPanelLayout_ms_fling_velocity, DEFAULT_MIN_FLING_VELOCITY);
+                mCoveredFadeColor = ta.getColor(R.styleable.SlidingUpPanelLayout_ms_fade_color, DEFAULT_FADE_COLOR);
 
-                mDragViewResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_umanoDragView, -1);
-                mScrollableViewResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_umanoScrollableView, -1);
+                mDragViewResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_ms_drag_view, -1);
+                mScrollableViewResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_ms_scrollable_view, -1);
 
-                mOverlayContent = ta.getBoolean(R.styleable.SlidingUpPanelLayout_umanoOverlay, DEFAULT_OVERLAY_FLAG);
-                mClipPanel = ta.getBoolean(R.styleable.SlidingUpPanelLayout_umanoClipPanel, DEFAULT_CLIP_PANEL_FLAG);
+                mOverlayContent = ta.getBoolean(R.styleable.SlidingUpPanelLayout_ms_overlay, DEFAULT_OVERLAY_FLAG);
+                mClipPanel = ta.getBoolean(R.styleable.SlidingUpPanelLayout_ms_clip_panel, DEFAULT_CLIP_PANEL_FLAG);
 
-                mAnchorPoint = ta.getFloat(R.styleable.SlidingUpPanelLayout_umanoAnchorPoint, DEFAULT_ANCHOR_POINT);
+                mAnchorPoint = ta.getFloat(R.styleable.SlidingUpPanelLayout_ms_anchor_point, DEFAULT_ANCHOR_POINT);
 
-                mSlideState = PanelState.values()[ta.getInt(R.styleable.SlidingUpPanelLayout_umanoInitialState, DEFAULT_SLIDE_STATE.ordinal())];
+                mSlideState = PanelState.values()[ta.getInt(R.styleable.SlidingUpPanelLayout_ms_initial_state, DEFAULT_SLIDE_STATE.ordinal())];
 
-                int interpolatorResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_umanoScrollInterpolator, -1);
+                int interpolatorResId = ta.getResourceId(R.styleable.SlidingUpPanelLayout_ms_scroll_interpolator, -1);
                 if (interpolatorResId != -1) {
                     scrollerInterpolator = AnimationUtils.loadInterpolator(context, interpolatorResId);
                 }
@@ -898,7 +896,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
             return false;
         }
 
-        final int action = MotionEventCompat.getActionMasked(ev);
+        final int action = ev.getActionMasked();
         final float x = ev.getX();
         final float y = ev.getY();
         final float adx = Math.abs(x - mInitialMotionX);
@@ -966,7 +964,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        final int action = MotionEventCompat.getActionMasked(ev);
+        final int action = ev.getActionMasked();
 
         if (!isEnabled() || !isTouchEnabled() || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
             mDragHelper.abort();
@@ -1110,7 +1108,6 @@ public class SlidingUpPanelLayout extends ViewGroup {
 
         // Abort any running animation, to allow state change
         if (mDragHelper.getViewDragState() == ViewDragHelper.STATE_SETTLING) {
-            Log.d(TAG, "View is settling. Aborting animation.");
             mDragHelper.abort();
         }
 
@@ -1161,7 +1158,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
     private void applyParallaxForCurrentSlideOffset() {
         if (mParallaxOffset > 0) {
             int mainViewOffset = getCurrentParallaxOffset();
-            ViewCompat.setTranslationY(mMainView, mainViewOffset);
+            mMainView.setTranslationY(mainViewOffset);
         }
     }
 
@@ -1315,7 +1312,7 @@ public class SlidingUpPanelLayout extends ViewGroup {
                 }
             }
         }
-        return checkV && ViewCompat.canScrollHorizontally(v, -dx);
+        return checkV && v.canScrollHorizontally(-dx);
     }
 
 

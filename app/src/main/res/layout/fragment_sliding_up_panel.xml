@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoDragView="@+id/ll_dragView"
-    sothree:umanoOverlay="true"
-    sothree:umanoPanelHeight="68dp"
-    sothree:umanoParallaxOffset="100dp"
-    sothree:umanoScrollableView="@+id/lv_list"
-    sothree:umanoShadowHeight="4dp">
+    sothree:ms_drag_view="@+id/ll_dragView"
+    sothree:ms_overlay="true"
+    sothree:ms_panel_height="68dp"
+    sothree:ms_parallax_offset="100dp"
+    sothree:ms_scrollable_view="@+id/lv_list"
+    sothree:ms_shadow_height="4dp">
 
     <!-- MAIN CONTENT -->
     <FrameLayout
