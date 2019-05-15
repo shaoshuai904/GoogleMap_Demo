@@ -40,7 +40,7 @@ public class HomeFragment extends BaseFragment {
         mActivity.setLeftBtnState(View.GONE, false);
         mActivity.setRightBtnState(View.GONE, false);
 
-        tv_about.setText(AppUtils.getAppVersionString(getContext()));
+        tv_about.setText(AppUtils.getAppVersionString(mContext));
     }
 
     @OnClick(R.id.bt_my_location)
