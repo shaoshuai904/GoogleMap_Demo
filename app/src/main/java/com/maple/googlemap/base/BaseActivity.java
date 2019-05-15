@@ -40,7 +40,6 @@ public class BaseActivity extends FragmentActivity {
         findView();
     }
 
-
     private void findView() {
         rl_top_bar = (RelativeLayout) findViewById(R.id.rl_top_bar);
         tv_left_title = (TextView) findViewById(R.id.tv_left_title);
@@ -48,18 +47,8 @@ public class BaseActivity extends FragmentActivity {
         tv_title = (TextView) findViewById(R.id.tv_title);
         ll_root = (LinearLayout) findViewById(R.id.ll_root);
 
-        tv_left_title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        tv_right_title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRightClick();
-            }
-        });
+        tv_left_title.setOnClickListener(v -> onBackPressed());
+        tv_right_title.setOnClickListener(v -> onRightClick());
     }
 
     public void setBaseContentView(int layoutID) {

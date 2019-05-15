@@ -15,21 +15,12 @@ import java.util.List;
  * @time 2019/2/22
  */
 public class CustomAreaBean {
-
     private String name;
     private Polygon polygon;
     private List<Marker> markers;
 
-    public CustomAreaBean() {
-    }
-
     public CustomAreaBean(String name) {
         this.name = name;
-    }
-
-    public CustomAreaBean(String name, List<Marker> markers) {
-        this.name = name;
-        this.markers = markers;
     }
 
     public int findMarkerIndex(Marker marker) {
@@ -104,18 +95,12 @@ public class CustomAreaBean {
     }
 
     public boolean isNull() {
-        if (markers == null || markers.size() == 0) {
-            return true;
-        }
-        return false;
+        return (markers == null || markers.size() == 0);
     }
 
     //是否形成区域
     public boolean isFormingArea() {
-        if (markers != null && markers.size() >= 3) {
-            return true;
-        }
-        return false;
+        return (markers != null && markers.size() >= 3);
     }
 
     //------------------------------------------------------------------------
