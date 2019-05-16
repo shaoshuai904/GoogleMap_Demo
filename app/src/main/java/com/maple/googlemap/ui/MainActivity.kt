@@ -1,14 +1,14 @@
 package com.maple.googlemap.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.google.android.gms.location.LocationServices
 import com.maple.googlemap.R
 import com.maple.googlemap.base.BaseTopBarActivity
+import com.maple.googlemap.utils.permission.RxPermissions
 
 /**
  * @author maple
@@ -24,8 +24,13 @@ class MainActivity : BaseTopBarActivity() {
     }
 
     @SuppressLint("MissingPermission")
-    @RequiresApi(api = Build.VERSION_CODES.M)
     fun getMyLocation() {
+        RxPermissions(this)
+                .request(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+                .subscribe()
         // 最新方法
         LocationServices.getFusedLocationProviderClient(mContext)
                 .lastLocation
