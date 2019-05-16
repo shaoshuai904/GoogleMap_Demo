@@ -141,7 +141,7 @@ class PolygonCenterFragment : BaseFragment(), OnMapReadyCallback {
                 )
                 .position(center))
         // 几何重心
-        val barycenter = SpatialRelationUtil.getCenterOfGravityPoint(curArea!!.points)
+        val barycenter = SpatialRelationUtil.getCenterOfGravityPoint(curArea.points)
         mMap.addMarker(MarkerOptions()
                 .draggable(false)
                 .anchor(0.5f, 0.5f)
