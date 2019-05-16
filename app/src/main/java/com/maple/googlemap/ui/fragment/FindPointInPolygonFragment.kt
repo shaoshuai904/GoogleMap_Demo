@@ -29,9 +29,9 @@ class FindPointInPolygonFragment : BaseFragment(), OnMapReadyCallback {
 
     // 获取基础区域
     private val baseArea = arrayListOf(
-            AreaFactory.getLibiya(),
-            AreaFactory.getNiriliya(),
-            AreaFactory.getZhongfei()
+            AreaFactory.libiya,
+            AreaFactory.niriliya,
+            AreaFactory.zhongfei
     )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
