@@ -5,7 +5,9 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationServices;
@@ -20,6 +22,8 @@ import com.maple.googlemap.base.BaseFragment;
 import com.maple.googlemap.ui.MainActivity;
 import com.maple.googlemap.utils.permission.RxPermissions;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import butterknife.ButterKnife;
 import io.reactivex.Observer;
@@ -36,15 +40,19 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
     private GoogleMap mMap;
     MainActivity mActivity;
 
+
     @Override
-    public int getLayoutRes() {
-        return R.layout.fragment_base_map;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_base_map, container, false);
+        ButterKnife.bind(this, view);
+        view.setClickable(true);
+        return view;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
-        ButterKnife.bind(this, view);
 
         mActivity.setTitle("My Location");
         mActivity.setLeftBtnState("Back", View.VISIBLE, true);
@@ -80,8 +88,8 @@ public class MyLocationFragment extends BaseFragment implements OnMapReadyCallba
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getMContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getMContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             checkPermission();
         } else {
             if (!mMap.isMyLocationEnabled())

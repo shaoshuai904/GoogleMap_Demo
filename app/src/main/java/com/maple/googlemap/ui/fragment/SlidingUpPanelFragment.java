@@ -5,13 +5,18 @@ import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,15 +58,19 @@ public class SlidingUpPanelFragment extends BaseFragment implements OnMapReadyCa
     private GoogleMap mMap;
     MainActivity mActivity;
 
+
     @Override
-    public int getLayoutRes() {
-        return R.layout.fragment_sliding_up_panel;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_sliding_up_panel, container, false);
+        ButterKnife.bind(this, view);
+        view.setClickable(true);
+        return view;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
-        ButterKnife.bind(this, view);
 
         mActivity.setTitle("多级悬浮滑动面板");
         mActivity.setLeftBtnState("Back", View.VISIBLE, true);
@@ -95,7 +104,7 @@ public class SlidingUpPanelFragment extends BaseFragment implements OnMapReadyCa
 
     @OnClick(R.id.bt_follow)
     void onClickButton() {
-        Toast.makeText(mContext, "click custom button", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getMContext(), "click custom button", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.bt_help)
@@ -203,11 +212,11 @@ public class SlidingUpPanelFragment extends BaseFragment implements OnMapReadyCa
         for (int i = 0; i < 30; i++) {
             arrayList.add("item " + i);
         }
-        lv_list.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, arrayList));
+        lv_list.setAdapter(new ArrayAdapter<String>(getMContext(), android.R.layout.simple_list_item_1, arrayList));
         lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(mContext, "onItemClick" + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getMContext(), "onItemClick" + position, Toast.LENGTH_SHORT).show();
             }
         });
     }

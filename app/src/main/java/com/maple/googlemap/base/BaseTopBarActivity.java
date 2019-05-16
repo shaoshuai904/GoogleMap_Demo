@@ -11,23 +11,17 @@ import android.widget.TextView;
 
 import com.maple.googlemap.R;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
-
 
 /**
  * @author maple
  * @time 16/4/13
  */
-public class BaseActivity extends FragmentActivity {
+public class BaseTopBarActivity extends BaseActivity {
     public RelativeLayout rl_top_bar;
     public TextView tv_left_title;
     public TextView tv_title;
     public TextView tv_right_title;
     public LinearLayout ll_root;
-
-    public Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +29,6 @@ public class BaseActivity extends FragmentActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 保持竖屏
 
         setContentView(R.layout.activity_base_fragment);
-        mContext = this;
 
         findView();
     }
@@ -61,40 +54,6 @@ public class BaseActivity extends FragmentActivity {
             rl_top_bar.setVisibility(View.VISIBLE);
         } else {
             rl_top_bar.setVisibility(View.GONE);
-        }
-    }
-
-    // ------------------ fragment ------------------
-
-    public void addView(Fragment fgView) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.fl_content, fgView).commit();
-    }
-
-    public void replaceView(Fragment fgView) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fl_content, fgView);
-        ft.addToBackStack(null);
-        ft.commit();
-    }
-
-    public void backFragment() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            finish();
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_content);
-        if (fragment instanceof BaseFragment) {
-            if (!((BaseFragment) fragment).onKeyBackPressed()) {
-                backFragment();
-            }
-        } else {
-            super.onBackPressed();
         }
     }
 

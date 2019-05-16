@@ -2,8 +2,13 @@ package com.maple.googlemap.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,14 +47,18 @@ public class PolygonCenterFragment extends BaseFragment implements OnMapReadyCal
     private CustomAreaBean curArea;
     MainActivity mActivity;
 
+
     @Override
-    public int getLayoutRes() {
-        return R.layout.fragment_polygon_barycenter;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_polygon_barycenter, container, false);
+        ButterKnife.bind(this, view);
+        view.setClickable(true);
+        return view;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
 
         mActivity.setTitle("计算重心");

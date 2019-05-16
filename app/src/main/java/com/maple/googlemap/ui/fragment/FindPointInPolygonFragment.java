@@ -1,14 +1,17 @@
 package com.maple.googlemap.ui.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -36,17 +39,19 @@ public class FindPointInPolygonFragment extends BaseFragment implements OnMapRea
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
     MainActivity mActivity;
-
     Marker marker;
 
     @Override
-    public int getLayoutRes() {
-        return R.layout.fragment_base_map;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_base_map, container, false);
+        ButterKnife.bind(this, view);
+        view.setClickable(true);
+        return view;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
 
         mActivity.setTitle("点与多边形关系");

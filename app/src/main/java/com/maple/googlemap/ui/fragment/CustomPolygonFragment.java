@@ -1,9 +1,14 @@
 package com.maple.googlemap.ui.fragment;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,13 +47,16 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
     private CustomAreaBean curArea;
 
     @Override
-    public int getLayoutRes() {
-        return R.layout.fragment_custom_polygon;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_custom_polygon, container, false);
+        ButterKnife.bind(this, view);
+        view.setClickable(true);
+        return view;
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
-        ButterKnife.bind(this, view);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mActivity = (MainActivity) getActivity();
 
         mActivity.setTitle("Custom Polygons");
@@ -126,19 +134,6 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
         superArea.updateMarker(marker);
     }
 
-    @Override
-    public boolean onKeyBackPressed() {
-        // 具体操作
-        if (1 == 1) {
-            Toast.makeText(mContext, "back Fragment", Toast.LENGTH_SHORT).show();
-            mActivity.backFragment();
-            return true;
-        } else {
-            // 不消耗back事件，交由父类处理。
-            return false;
-        }
-    }
-
     @OnClick(R.id.tv_clear_all)
     void onClickClearAll() {
 //        for (CustomAreaBean areaBean : allArea) {
@@ -164,7 +159,7 @@ public class CustomPolygonFragment extends BaseFragment implements OnMapReadyCal
     @OnClick(R.id.tv_add)
     void onClickAdd() {
         if (curArea.getMarkers() == null || curArea.getMarkers().size() == 0) {
-            Toast.makeText(mContext, "没有东西，你让我添加什么？", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getMContext(), "没有东西，你让我添加什么？", Toast.LENGTH_SHORT).show();
         } else {
             curArea.setSelState(false);
             allArea.add(curArea);
