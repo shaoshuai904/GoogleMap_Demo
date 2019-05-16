@@ -42,10 +42,8 @@ class MyLocationFragment : BaseFragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mActivity = activity as MainActivity
-
-        mActivity.title = "My Location"
-        mActivity.setLeftBtnState("Back", View.VISIBLE, true)
-        mActivity.setRightBtnState(View.GONE, false)
+        mActivity.updateTitle("My Location")
+        mActivity.setLeftBtnState(View.VISIBLE)
 
         mapFragment = childFragmentManager.findFragmentById(R.id.fm_map) as SupportMapFragment
         mapFragment.getMapAsync(this)

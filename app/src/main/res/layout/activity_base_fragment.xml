@@ -5,14 +5,10 @@
 
     <include layout="@layout/activity_pager_top_bar" />
 
-    <LinearLayout
-        android:id="@+id/ll_root"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 

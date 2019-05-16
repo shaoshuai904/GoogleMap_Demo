@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import butterknife.ButterKnife
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -42,10 +41,8 @@ class CustomPolygonFragment : BaseFragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mActivity = activity as MainActivity
-
-        mActivity.title = "Custom Polygons"
-        mActivity.setLeftBtnState("Back", View.VISIBLE, true)
-        mActivity.setRightBtnState(View.GONE, false)
+        mActivity.updateTitle("Custom Polygons")
+        mActivity.setLeftBtnState(View.VISIBLE)
 
         curArea = CustomAreaBean("custom_area_number_0")
         curArea.setSelState(true)

@@ -26,10 +26,8 @@ class HomeFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mActivity = activity as MainActivity
-
-        mActivity.title = "Google Map Demo"
-        mActivity.setLeftBtnState(View.GONE, false)
-        mActivity.setRightBtnState(View.GONE, false)
+        mActivity.updateTitle("Google Map Demo")
+        mActivity.setLeftBtnState(View.GONE)
 
         tv_about.text = AppUtils.getAppVersionString(mContext)
 

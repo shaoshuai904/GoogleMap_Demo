@@ -39,11 +39,8 @@ class PolygonCenterFragment : BaseFragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mActivity = activity as MainActivity
-
-        mActivity.title = "计算重心"
-        mActivity.setLeftBtnState("Back", View.VISIBLE, true)
-        mActivity.setRightBtnState(View.GONE, false)
-
+        mActivity.updateTitle("计算重心")
+        mActivity.setLeftBtnState(View.VISIBLE)
 
         curArea = CustomAreaBean("custom_area")
         curArea.setSelState(true)

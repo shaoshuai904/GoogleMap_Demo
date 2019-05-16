@@ -47,10 +47,8 @@ class SlidingUpPanelFragment : BaseFragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mActivity = activity as MainActivity
-
-        mActivity.title = "多级悬浮滑动面板"
-        mActivity.setLeftBtnState("Back", View.VISIBLE, true)
-        mActivity.setRightBtnState(View.GONE, false)
+        mActivity.updateTitle("多级悬浮滑动面板")
+        mActivity.setLeftBtnState(View.VISIBLE)
 
         mapFragment = childFragmentManager.findFragmentById(R.id.fm_map) as SupportMapFragment
         mapFragment.getMapAsync(this)

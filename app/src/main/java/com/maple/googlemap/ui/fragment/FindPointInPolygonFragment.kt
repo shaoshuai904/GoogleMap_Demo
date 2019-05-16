@@ -43,10 +43,8 @@ class FindPointInPolygonFragment : BaseFragment(), OnMapReadyCallback {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         mActivity = activity as MainActivity
-
-        mActivity.title = "点与多边形关系"
-        mActivity.setLeftBtnState("Back", View.VISIBLE, true)
-        mActivity.setRightBtnState(View.GONE, false)
+        mActivity.updateTitle("点与多边形关系")
+        mActivity.setLeftBtnState(View.VISIBLE)
 
         mapFragment = childFragmentManager.findFragmentById(R.id.fm_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
