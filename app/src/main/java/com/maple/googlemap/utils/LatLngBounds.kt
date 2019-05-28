@@ -10,7 +10,7 @@ import com.google.android.gms.maps.model.LatLng
  * @author maple
  * @time 2019-05-28
  */
-@Deprecated("请使用com.google.android.gms.maps.model.LatLngBounds")
+@Deprecated("条件允许，请使用com.google.android.gms.maps.model.LatLngBounds")
 class LatLngBounds constructor(
         private val southwest: LatLng,// 左下角 点
         private val northeast: LatLng // 右上角 点
@@ -113,7 +113,7 @@ class LatLngBounds constructor(
 //    /**
 //     * 经纬度点
 //     */
-//    @Deprecated("请使用com.google.android.gms.maps.model.LatLng")
+//    @Deprecated("条件允许，请使用com.google.android.gms.maps.model.LatLng")
 //    class LatLng(
 //            val latitude: Double,   // 纬度
 //            val longitude: Double   // 经度
