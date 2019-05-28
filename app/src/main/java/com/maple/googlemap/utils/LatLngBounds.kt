@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng
  * @author maple
  * @time 2019-05-28
  */
+@Deprecated("请使用com.google.android.gms.maps.model.LatLngBounds")
 class LatLngBounds constructor(
         private val southwest: LatLng,// 左下角 点
         private val northeast: LatLng // 右上角 点
@@ -32,13 +33,16 @@ class LatLngBounds constructor(
 
     // 某个点是否在该范围内（包含边界）
     fun contains(point: LatLng): Boolean {
-        val pLat = point.latitude
-        return this.southwest.latitude <= pLat && pLat <= this.northeast.latitude// 纬度包含
-                && this.zza(point.longitude)// 经度包含
+        return latContains(point.latitude) && this.lngContains(point.longitude)
+    }
+
+    // 某个纬度值是否在该范围内（包含边界）
+    private fun latContains(lat: Double): Boolean {
+        return this.southwest.latitude <= lat && lat <= this.northeast.latitude
     }
 
     // 某个经度值是否在该范围内（包含边界）
-    private fun zza(lng: Double): Boolean {
+    private fun lngContains(lng: Double): Boolean {
         return if (this.southwest.longitude <= this.northeast.longitude) {
             this.southwest.longitude <= lng && lng <= this.northeast.longitude
         } else {
@@ -46,14 +50,14 @@ class LatLngBounds constructor(
         }
     }
 
-    // 建议使用Builder中的include()
+    // 小数据量可以使用该方法，大数据量建议使用Builder中的include()
     fun including(point: LatLng): LatLngBounds {
         val swLat = Math.min(this.southwest.latitude, point.latitude)
         val neLat = Math.max(this.northeast.latitude, point.latitude)
         var neLng = this.northeast.longitude
         var swLng = this.southwest.longitude
         val pLng = point.longitude
-        if (!this.zza(pLng)) {
+        if (!this.lngContains(pLng)) {
             if (zza(swLng, pLng) < zzb(neLng, pLng)) {
                 swLng = pLng
             } else {
@@ -62,7 +66,6 @@ class LatLngBounds constructor(
         }
         return LatLngBounds(LatLng(swLat, swLng), LatLng(neLat, neLng))
     }
-
 
     /**
      * LatLngBounds生成器
@@ -80,10 +83,9 @@ class LatLngBounds constructor(
             if (java.lang.Double.isNaN(this.swLng)) {
                 this.swLng = pLng
             } else {
-                if (if (this.swLng <= this.neLng) this.swLng <= pLng && pLng <= this.neLng else this.swLng <= pLng || pLng <= this.neLng) {
+                if (lngContains(pLng)) {
                     return this
                 }
-
                 if (zza(this.swLng, pLng) < zzb(this.neLng, pLng)) {
                     this.swLng = pLng
                     return this
@@ -91,6 +93,15 @@ class LatLngBounds constructor(
             }
             this.neLng = pLng
             return this
+        }
+
+        // 某个经度值是否在该范围内（包含边界）
+        private fun lngContains(lng: Double): Boolean {
+            return if (this.swLng <= this.neLng) {
+                this.swLng <= lng && lng <= this.neLng
+            } else {
+                this.swLng <= lng || lng <= this.neLng
+            }
         }
 
         fun build(): LatLngBounds {
@@ -102,6 +113,7 @@ class LatLngBounds constructor(
 //    /**
 //     * 经纬度点
 //     */
+//    @Deprecated("请使用com.google.android.gms.maps.model.LatLng")
 //    class LatLng(
 //            val latitude: Double,   // 纬度
 //            val longitude: Double   // 经度
@@ -116,10 +128,12 @@ class LatLngBounds constructor(
             return Builder()
         }
 
+        // 前者 - 后者
         private fun zza(var0: Double, var2: Double): Double {
             return (var0 - var2 + 360.0) % 360.0
         }
 
+        // 后者 - 前者
         private fun zzb(var0: Double, var2: Double): Double {
             return (var2 - var0 + 360.0) % 360.0
         }
