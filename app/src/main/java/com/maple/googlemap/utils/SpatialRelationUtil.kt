@@ -1,7 +1,7 @@
 package com.maple.googlemap.utils
 
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
+
 
 /**
  * Polygon 与 Point 空间关系 工具类
@@ -10,11 +10,6 @@ import com.google.android.gms.maps.model.LatLngBounds
  * @time 2019/2/22
  */
 object SpatialRelationUtil {
-
-    //    public class LatLng {
-    //        double latitude;
-    //        double longitude;
-    //    }
 
     /**
      * 获取不规则多边形几何中心点
@@ -73,7 +68,6 @@ object SpatialRelationUtil {
             false
         }
     }
-
 
     /**
      * 返回一个点是否在一个多边形区域内
