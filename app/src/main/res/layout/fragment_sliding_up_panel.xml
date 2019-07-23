@@ -103,7 +103,8 @@
             android:id="@+id/lv_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:visibility="gone" />
 
     </LinearLayout>
 </com.maple.googlemap.view.SlidingUpPanelLayout>

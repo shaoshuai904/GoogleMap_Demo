@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.LatLng
  * @time 2019-05-28
  */
 @Deprecated("条件允许，请使用com.google.android.gms.maps.model.LatLngBounds")
-class LatLngBounds constructor(
+class LatLngBoundsKotlin constructor(
         private val southwest: LatLng,// 左下角 点
         private val northeast: LatLng // 右上角 点
 ) {
@@ -51,7 +51,7 @@ class LatLngBounds constructor(
     }
 
     // 小数据量可以使用该方法，大数据量建议使用Builder中的include()
-    fun including(point: LatLng): LatLngBounds {
+    fun including(point: LatLng): LatLngBoundsKotlin {
         val swLat = Math.min(this.southwest.latitude, point.latitude)
         val neLat = Math.max(this.northeast.latitude, point.latitude)
         var neLng = this.northeast.longitude
@@ -64,12 +64,13 @@ class LatLngBounds constructor(
                 neLng = pLng
             }
         }
-        return LatLngBounds(LatLng(swLat, swLng), LatLng(neLat, neLng))
+        return LatLngBoundsKotlin(LatLng(swLat, swLng), LatLng(neLat, neLng))
     }
 
     /**
      * LatLngBounds生成器
      */
+    @Deprecated("条件允许，请使用com.google.android.gms.maps.model.LatLngBounds.Builder")
     class Builder {
         private var swLat = 1.0 / 0.0   // 左下角 纬度
         private var swLng = 0.0 / 0.0   // 左下角 经度
@@ -104,9 +105,9 @@ class LatLngBounds constructor(
             }
         }
 
-        fun build(): LatLngBounds {
+        fun build(): LatLngBoundsKotlin {
             // Preconditions.checkState(!java.lang.Double.isNaN(this.swLng), "no included points")
-            return LatLngBounds(LatLng(this.swLat, this.swLng), LatLng(this.neLat, this.neLng))
+            return LatLngBoundsKotlin(LatLng(this.swLat, this.swLng), LatLng(this.neLat, this.neLng))
         }
     }
 
