@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,12 +24,12 @@ import com.maple.googlemap.ui.MainActivity
 import com.maple.googlemap.utils.permission.RxPermissions
 
 /**
- * 获取我的位置
+ * 通过Google地图获取我的位置
  *
  * @author maple
  * @time 2018/8/8.
  */
-class MyLocationFragment : BaseFragment(), OnMapReadyCallback {
+class MyLocationMapFragment : BaseFragment(), OnMapReadyCallback {
     private lateinit var mapFragment: SupportMapFragment
     private lateinit var mMap: GoogleMap
     private lateinit var mActivity: MainActivity
@@ -124,6 +125,7 @@ class MyLocationFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun moveToLatLng(location: Location) {
         val userLocation = LatLng(location.latitude, location.longitude)
+        Log.e("my_location","get my location:  $userLocation")
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14f), 1500, null)
     }
 

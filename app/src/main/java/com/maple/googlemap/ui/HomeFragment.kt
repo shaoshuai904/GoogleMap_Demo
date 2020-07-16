@@ -35,8 +35,11 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initListener() {
-        bt_my_location.setOnClickListener {
-            mActivity.replaceView(MyLocationFragment())
+        bt_my_location_for_system.setOnClickListener {
+            mActivity.replaceView(MyLocationSysFragment())
+        }
+        bt_my_location_for_map.setOnClickListener {
+            mActivity.replaceView(MyLocationMapFragment())
         }
         bt_draw_polygons.setOnClickListener {
             mActivity.replaceView(CustomPolygonFragment())
@@ -51,5 +54,4 @@ class HomeFragment : BaseFragment() {
             mActivity.replaceView(SlidingUpPanelFragment())
         }
     }
-
 }

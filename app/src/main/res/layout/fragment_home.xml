@@ -9,13 +9,23 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/bt_my_location"
+            android:id="@+id/bt_my_location_for_system"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/selector_base_fillet_border_bg"
             android:padding="10dp"
-            android:text="My Location"
+            android:text="Android系统: 我的位置"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/bt_my_location_for_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/selector_base_fillet_border_bg"
+            android:padding="10dp"
+            android:text="Google地图：My Location"
             android:textAllCaps="false" />
 
         <Button
@@ -25,7 +35,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/selector_base_fillet_border_bg"
             android:padding="10dp"
-            android:text="Draw Polygons"
+            android:text="绘制不规则多边形"
             android:textAllCaps="false" />
 
         <Button
