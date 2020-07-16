@@ -35,10 +35,10 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initListener() {
-        bt_my_location_for_system.setOnClickListener {
+        bt_my_location_by_system.setOnClickListener {
             mActivity.replaceView(MyLocationSysFragment())
         }
-        bt_my_location_for_map.setOnClickListener {
+        bt_my_location_by_map.setOnClickListener {
             mActivity.replaceView(MyLocationMapFragment())
         }
         bt_draw_polygons.setOnClickListener {

@@ -9,7 +9,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/bt_my_location_for_system"
+            android:id="@+id/bt_my_location_by_system"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -19,7 +19,7 @@
             android:textAllCaps="false" />
 
         <Button
-            android:id="@+id/bt_my_location_for_map"
+            android:id="@+id/bt_my_location_by_map"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

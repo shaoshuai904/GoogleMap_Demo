@@ -6,7 +6,8 @@
 
 展示一些常用的Google地图操作。
 
-- 获取我的位置。/ get my location.
+- Android系统API获取我的位置并解析所在地。/ get my location by system api.
+- Google地图获取我的位置。/ get my location by map.
 - 画自定义图形。/ draw custom polygons.
 - 计算自定义图形的中心
 - 计算自定义图形的重心
