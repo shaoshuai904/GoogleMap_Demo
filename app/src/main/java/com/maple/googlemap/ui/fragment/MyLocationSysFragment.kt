@@ -47,16 +47,16 @@ class MyLocationSysFragment : BaseFragment() {
 
     @SuppressLint("CheckResult", "MissingPermission")
     private fun getMyLocation() {
-        RxPermissions(mActivity).request(
+        RxPermissions(this).request(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
         ).subscribe { granted ->
             if (granted) {
-                val lm: LocationManager = mActivity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                val lm: LocationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
                 val myLocation: Location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
                 getLocationCity(myLocation)
             } else {
-                AlertDialog(mActivity).apply {
+                AlertDialog(mContext).apply {
                     setCancelable(false)
                     setCanceledOnTouchOutside(false)
                     setTitle("权限不足！")
@@ -71,7 +71,7 @@ class MyLocationSysFragment : BaseFragment() {
     @SuppressLint("CheckResult")
     private fun getLocationCity(location: Location) {
         val sb = StringBuilder()
-        sb.append("经纬度： ${location.latitude}   ${location.longitude} \n")
+        sb.append("经纬度： ${location.latitude}    ${location.longitude} \n")
         Observable.just(location)
                 .map {
                     val gc = Geocoder(mActivity, Locale.getDefault())
@@ -81,7 +81,15 @@ class MyLocationSysFragment : BaseFragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     it.forEach { item ->
-                        sb.append("Address ： ${item.toString()} \n")
+                        sb.append("locale ： ${item.locale} \n" +
+                                "countryName ： ${item.countryName} \n" +
+                                "countryCode ： ${item.countryCode} \n" +
+                                "locality ： ${item.locality} \n" +
+                                "subLocality ： ${item.subLocality} \n" +
+                                "thoroughfare ： ${item.thoroughfare} \n" +
+                                "subThoroughfare ： ${item.subThoroughfare} \n" +
+                                "featureName ： ${item.featureName} \n" +
+                                "item info ： ${item.toString()} \n")
                     }
                     tv_info.text = sb.toString()
                 }
