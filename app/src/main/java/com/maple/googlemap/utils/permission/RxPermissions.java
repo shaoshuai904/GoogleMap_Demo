@@ -5,13 +5,14 @@ import android.app.Activity;
 import android.os.Build;
 import android.text.TextUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
@@ -56,7 +57,7 @@ public class RxPermissions {
     }
 
     private RxPermissionsFragment getRxPermissionsFragment(@NonNull final FragmentManager fragmentManager) {
-        RxPermissionsFragment rxPermissionsFragment = (RxPermissionsFragment) fragmentManager.findFragmentByTag(TAG);
+        RxPermissionsFragment rxPermissionsFragment = findRxPermissionsFragment(fragmentManager);
         if (rxPermissionsFragment == null) {
             rxPermissionsFragment = new RxPermissionsFragment();
             fragmentManager
@@ -65,6 +66,10 @@ public class RxPermissions {
                     .commitNow();
         }
         return rxPermissionsFragment;
+    }
+
+    private RxPermissionsFragment findRxPermissionsFragment(@NonNull final FragmentManager fragmentManager) {
+        return (RxPermissionsFragment) fragmentManager.findFragmentByTag(TAG);
     }
 
     public void setLogging(boolean logging) {
@@ -247,9 +252,11 @@ public class RxPermissions {
     }
 
     /**
-     * Invokes Activity.neverAskAgain and wraps the returned value in an observable.
+     * Invokes Activity.shouldShowRequestPermissionRationale and wraps
+     * the returned value in an observable.
      * <p>
-     * In case of multiple permissions, only emits true if Activity.neverAskAgain returned true for
+     * In case of multiple permissions, only emits true if
+     * Activity.shouldShowRequestPermissionRationale returned true for
      * all revoked permissions.
      * <p>
      * You shouldn't call this method if all permissions have been granted.
@@ -307,7 +314,7 @@ public class RxPermissions {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
-    void onRequestPermissionsResult(String permissions[], int[] grantResults) {
+    void onRequestPermissionsResult(String[] permissions, int[] grantResults) {
         mRxPermissionsFragment.get().onRequestPermissionsResult(permissions, grantResults, new boolean[permissions.length]);
     }
 
