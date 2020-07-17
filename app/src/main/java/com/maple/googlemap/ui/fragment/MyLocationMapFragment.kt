@@ -2,7 +2,6 @@ package com.maple.googlemap.ui.fragment
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,6 +20,7 @@ import com.maple.googlemap.R
 import com.maple.googlemap.base.BaseFragment
 import com.maple.googlemap.ui.MainActivity
 import com.maple.googlemap.utils.permission.RxPermissions
+import com.maple.msdialog.AlertDialog
 
 /**
  * 通过Google地图获取我的位置
@@ -71,20 +70,35 @@ class MyLocationMapFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        checkPermission()
 
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            checkPermission()
-        } else {
-            if (!mMap.isMyLocationEnabled)
-                mMap.isMyLocationEnabled = true
-            getMyLocation()
-        }
-
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    @SuppressLint("CheckResult", "MissingPermission")
+    private fun checkPermission() {
+        RxPermissions(this).request(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        ).subscribe { granted ->
+            if (granted) {
+                if (!mMap.isMyLocationEnabled)
+                    mMap.isMyLocationEnabled = true
+                getMyLocation()
+            } else {
+                AlertDialog(mContext).apply {
+                    setCancelable(false)
+                    setCanceledOnTouchOutside(false)
+                    setTitle("权限不足！")
+                    setMessage("获取地理位置必须要有“ACCESS_FINE_LOCATION”和“ACCESS_COARSE_LOCATION”权限哦。")
+                    setLeftButton("退出")
+                    setRightButton("再选一次", View.OnClickListener { checkPermission() })
+                }.show()
+            }
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -125,17 +139,8 @@ class MyLocationMapFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun moveToLatLng(location: Location) {
         val userLocation = LatLng(location.latitude, location.longitude)
-        Log.e("my_location","get my location:  $userLocation")
+        Log.e("my_location", "get my location:  $userLocation")
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 14f), 1500, null)
-    }
-
-    private fun checkPermission() {
-        RxPermissions(mActivity)
-                .request(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-                .subscribe()
     }
 
 }

@@ -117,28 +117,26 @@ class SlidingUpPanelFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     private fun checkPermission() {
-        RxPermissions(mActivity)
-                .request(
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-                .subscribe(object : Observer<Boolean> {
+        RxPermissions(mActivity).request(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        ).subscribe(object : Observer<Boolean> {
 
-                    override fun onSubscribe(d: Disposable) {}
+            override fun onSubscribe(d: Disposable) {}
 
-                    override fun onNext(aBoolean: Boolean) {
-                        Log.e("on next", "return:  $aBoolean")
-                    }
+            override fun onNext(aBoolean: Boolean) {
+                Log.e("on next", "return:  $aBoolean")
+            }
 
-                    override fun onError(e: Throwable) {}
+            override fun onError(e: Throwable) {}
 
-                    @SuppressLint("MissingPermission")
-                    override fun onComplete() {
-                        if (!mMap.isMyLocationEnabled)
-                            mMap.isMyLocationEnabled = true
-                        getMyLocation()
-                    }
-                })
+            @SuppressLint("MissingPermission")
+            override fun onComplete() {
+                if (!mMap.isMyLocationEnabled)
+                    mMap.isMyLocationEnabled = true
+                getMyLocation()
+            }
+        })
     }
 
     @SuppressLint("MissingPermission")
