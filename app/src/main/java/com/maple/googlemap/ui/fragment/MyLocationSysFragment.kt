@@ -53,7 +53,11 @@ class MyLocationSysFragment : BaseFragment() {
         ).subscribe { granted ->
             if (granted) {
                 val lm: LocationManager = mContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                val myLocation: Location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                var myLocation: Location? = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                if (myLocation == null) {
+                    tv_info.text = "GPS 获取位置失败，尝试网络获取..."
+                    myLocation = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                }
                 getLocationCity(myLocation)
             } else {
                 AlertDialog(mContext).apply {
@@ -69,7 +73,11 @@ class MyLocationSysFragment : BaseFragment() {
     }
 
     @SuppressLint("CheckResult")
-    private fun getLocationCity(location: Location) {
+    private fun getLocationCity(location: Location?) {
+        if (location == null) {
+            tv_info.text = "location is null !"
+            return
+        }
         val sb = StringBuilder()
         sb.append("经纬度： ${location.latitude}    ${location.longitude} \n")
         Observable.just(location)
@@ -80,7 +88,7 @@ class MyLocationSysFragment : BaseFragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    it.forEach { item ->
+                    it?.forEach { item ->
                         sb.append("locale ： ${item.locale} \n" +
                                 "countryName ： ${item.countryName} \n" +
                                 "countryCode ： ${item.countryCode} \n" +
