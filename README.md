@@ -1,7 +1,8 @@
 # GoogleMap Demo 
 
 [![API](https://img.shields.io/badge/API-19%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=19)
-[下载Demo](https://github.com/shaoshuai904/GoogleMap_Demo/blob/master/screens/app_v1.0.1_5.apk)
+
+[下载demo.apk](https://github.com/shaoshuai904/GoogleMap_Demo/blob/master/screens/app_v1.0.1_5.apk)
 
 
 展示一些常用的Google地图操作。
